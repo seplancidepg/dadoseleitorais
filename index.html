@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meu Relatório Power BI</title>
+    <style>
+        /* Garante que o container ocupe a tela inteira sem barras de rolagem do navegador */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            width: 100%;
+            overflow: hidden; 
+            background-color: #eaeaea; /* Cor de fundo opcional */
+        }
+        #container {
+            width: 100vw;
+            height: 100vh;
+        }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script>
+        // Adicionei os parâmetros ?pageView=fitToWidth para forçar o preenchimento da tela
+        const linkDesktop = "https://app.powerbi.com/view?r=eyJrIjoiNjE0MGMwNjgtMDlhYy00OGQ1LTlhMDYtMGJhNDlhZjM4ZTU0IiwidCI6ImJkOTFhMDZhLTAzMGMtNDBiNC1hMWUzLTE5Y2Y4ODE0Zjk2MCJ9";
+        const linkMobile = "https://app.powerbi.com/view?r=eyJrIjoiYzViNTdiODUtMjhhOS00Y2I1LTk0NDAtM2U5MDkwZmM4NWU4IiwidCI6ImJkOTFhMDZhLTAzMGMtNDBiNC1hMWUzLTE5Y2Y4ODE0Zjk2MCJ9";
+
+        function carregarRelatorio() {
+            const container = document.getElementById('container');
+            const larguraTela = window.innerWidth;
+            let urlFinal = "";
+
+            // Detecção mobile baseada em largura (768px é o padrão tablet/mobile)
+            if (larguraTela < 768) {
+                urlFinal = linkMobile;
+            } else {
+                urlFinal = linkDesktop;
+            }
+
+            container.innerHTML = `<iframe src="${urlFinal}" allowFullScreen="true"></iframe>`;
+        }
+
+        carregarRelatorio();
+
+        // Faz o ajuste se o usuário girar o celular
+        window.addEventListener('orientationchange', function() {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
