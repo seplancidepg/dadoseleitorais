@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Power BI</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #eaeaea;
+    font-family: Arial, sans-serif;
+}
+
+/* Container do relatório */
+#container {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Iframe */
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Loading */
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #333;
+    z-index: 9999;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loading">🔄 Carregando relatório...</div>
+<div id="container"></div>
+
+<script>
+// 🔗 LINKS DOS RELATÓRIOS (Power BI Publicar na Web)
+const linkDesktop = "https://app.powerbi.com/view?r=eyJrIjoiZmYyZmJiZTItYjNkYi00ZTY0LTgwZmMtN2M5NGJhYmQyYTFmIiwidCI6ImJkOTFhMDZhLTAzMGMtNDBiNC1hMWUzLTE5Y2Y4ODE0Zjk2MCJ9";
+
+const linkMobile = "https://app.powerbi.com/view?r=eyJrIjoiMmMzMmEyOWQtOTAzZC00NjY5LWFiODAtN2U4MDJjYzZhNDAwIiwidCI6ImJkOTFhMDZhLTAzMGMtNDBiNC1hMWUzLTE5Y2Y4ODE0Zjk2MCJ9";
+
+// 🔍 Detecta dispositivo
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+}
+
+// 🚀 Carrega relatório correto
+function carregarRelatorio() {
+    const container = document.getElementById("container");
+    const loading = document.getElementById("loading");
+
+    const url = isMobile() ? linkMobile : linkDesktop;
+
+    container.innerHTML = `
+        <iframe src="${url}" allowfullscreen onload="document.getElementById('loading').style.display='none'"></iframe>
+    `;
+}
+
+// Executa
+carregarRelatorio();
+
+// 🔄 Atualiza ao redimensionar (sem reload pesado)
+window.addEventListener("resize", carregarRelatorio);
+</script>
+
+</body>
+</html>
